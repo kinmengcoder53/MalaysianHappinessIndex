@@ -5,4 +5,10 @@ module.exports = {
     access_token_key: '2909731040-wt03GtS4hwqPaEF2mJqGpFiqRNt8CT4VgqHBThe',
     access_token_secret: '0MMSOj6SGN850A4FBfmBOi8o0iKxEmILPdjQFpU0YDA2M'
   }
+  
+  google: {
+      claimSetISS: '609476964078-o6jshu9go33k58se5o7e8d3dn6451v1v@developer.gserviceaccount.com',
+      path: './certs/MalaysiaHappinessIndex.pem',
+      modelInsertFields: ''
+  }
 }
