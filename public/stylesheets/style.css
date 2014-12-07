@@ -1,6 +1,10 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font-family: oswald_book;
+  font-size: 50px;
+  font-weight: normal;
+  background-color: #f0eee1;
+  text-align: center;
+  background-image: url("/images/gridLine.png");
 }
 
 a {
@@ -8,10 +12,32 @@ a {
 }
 
 .container {
+    margin-top: -50px;
 	width: 100%;
 	height: 100%;
 }
 
 #map_canvas{
-  height:60%;
+    height: 60%;
+}
+
+@font-face {
+    font-family: oswald_book;
+    src: url(/fonts/Oswald_Book.otf);
+}
+
+ul {
+    list-style-type: none;
+}
+
+#bar {
+    margin-top: -40px;
+}
+
+#title {
+    margin-top: -40px;
+}
+
+html {
+    height: 500px;
 }
