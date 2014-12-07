@@ -22,35 +22,37 @@ module.exports = function(stream, pubnub){
             var sentimentResult = sentiment(text);
             var score = sentimentResult.score;
             var weight = 0;
-            if(score < 0) {
-                weight = score * -1;
-            }
+            if(score !== 0) {
+                if(score < 0) {
+                    weight = score * -1;
+                }
+                
+                var result = {
+                  weight: weight,
+                  loc: coordinates,
+                  date: new Date(),
+                  originalWeight: score
+                };
             
-            var result = {
-              weight: weight,
-              loc: coordinates,
-              date: new Date(),
-              originalWeight: score
-            };
-        
-            // Create a new model instance with our object
-            var sentimentEntry = new SentimentModel(result);
-            var positiveWords = sentimentResult.positive;
-            var negativeWords = sentimentResult.negative;
-            
-            sentimentEntry.save(function(err) {
-              if (!err) {
-                pubnub.publish({ 
-                    channel   : 'mhi_heatmap',
-                    message   : result,
-                    callback  : function(e) { console.log( "SUCCESS!", e ); },
-                    error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                // Create a new model instance with our object
+                var sentimentEntry = new SentimentModel(result);
+                var positiveWords = sentimentResult.positive;
+                var negativeWords = sentimentResult.negative;
+                
+                sentimentEntry.save(function(err) {
+                  if (!err) {
+                    pubnub.publish({ 
+                        channel   : 'mhi_heatmap',
+                        message   : result,
+                        callback  : function(e) { console.log( "SUCCESS!", e ); },
+                        error     : function(e) { console.log( "FAILED! RETRY PUBLISH!", e ); }
+                    });
+                    
+                    wordOccurenceCollector(pubnub, positiveWords, negativeWords);
+                    
+                  }
                 });
-                
-                wordOccurenceCollector(pubnub, positiveWords, negativeWords);
-                
-              }
-            });
+            }
           }
       }
   });
