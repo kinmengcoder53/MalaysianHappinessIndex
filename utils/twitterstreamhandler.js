@@ -25,6 +25,8 @@ module.exports = function(stream, pubnub){
             if(score !== 0) {
                 if(score < 0) {
                     weight = score * -1;
+                } else {
+                    weight = 0.001;
                 }
                 
                 var result = {
