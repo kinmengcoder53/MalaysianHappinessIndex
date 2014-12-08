@@ -1,5 +1,5 @@
 function initialize() {
-  var myLatlng = new google.maps.LatLng(5.626798, 108.804958);
+  var myLatlng = new google.maps.LatLng(4.692481, 108.613084);
   var myOptions = {
     zoom: 6,
     center: myLatlng,
@@ -46,7 +46,7 @@ function initialize() {
             var locationObj = m['loc'];
             var coordinates = locationObj['coordinates'];
             var point = { 'location':new google.maps.LatLng(coordinates[1], coordinates[0])
-            , 'weight': m['weight']};
+            , 'weight': originalWeight};
             positiveIndexes.push(point);
         } else {
             locationObj = m['loc'];
@@ -58,5 +58,15 @@ function initialize() {
         
     }
   });
+  
+  pubnub.subscribe({
+    channel: 'mhi_currentIndex',
+   message : function(m){
+       console.log(m);
+       var index = m['index'];
+       document.getElementById('current_index').innerHTML = "Current Index: " + Number(index).toFixed(2);
+   }
+  });
+  
   
 }
